@@ -1,0 +1,15 @@
+.background-color{
+    background-color: #dad8d8;
+}
+.animal-btn{
+    margin: 10px;
+    background-color: #a7a7e4;
+
+}
+.ratingAndImage{
+    display: inline-block;
+    margin: 5px;
+}
+.blockShow{
+    display: block;
+}
