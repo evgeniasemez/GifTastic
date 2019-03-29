@@ -19,78 +19,32 @@ $(document).ready(function () {
             for (var i = 0; i < 8; i++) {
                 var ratingURL = response.data[i].rating;
                 var rating = $("<div>").text("Rating: " + ratingURL);
-                // rating.attr("class","inlineShow");
 
-                var ratingAndImage = $("<div>").attr("class","ratingAndImage");
+                var ratingAndImage = $("<div>").attr("class", "ratingAndImage");
                 var imgURL = response.data[i].images.fixed_height_still.url;
                 var image = $("<img>").attr("src", imgURL);
 
                 var newThing = response.data[i].images.fixed_height.url;
+
                 image.attr("moving", newThing);
-                image.on("click", function(){
-                
-                    // var imgMove = response.data[i].images.fixed_height.url;
+
+                image.on("click", function () {
+
                     var imagg = $(this).attr("moving");
-                   $(this).attr("src", imagg);
-                    // ratingAndImage.append(imagg);
-                    // console.log(imgMove);
+                    $(this).attr("src", imagg);
                 });
-                
-                image.attr("class","blockShow");
+
+                image.attr("class", "blockShow");
 
                 ratingAndImage.append(rating);
                 ratingAndImage.append(image);
                 $("#animal-view").append(ratingAndImage);
-                
-                
+
+
             }
         });
     }
 
-    //         // Creating a div to hold the movie
-    //         var animalDiv = $("<div class=animal>");
-
-    //         // Storing the rating data
-    //         var rating = response.Rated;
-
-    //         // Creating an element to have the rating displayed
-    //         var pOne = $("<p>").text("Rating: " + rating);
-
-    //         // Displaying the rating
-    //         animalDiv.append(pOne);
-
-    //         // Storing the release year
-    //         var released = response.Released;
-
-    //         // Creating an element to hold the release year
-    //         var pTwo = $("<p>").text("Released: " + released);
-
-    //         // Displaying the release year
-    //         animalDiv.append(pTwo);
-
-    //         // Storing the plot
-    //         var plot = response.Plot;
-
-    //         // Creating an element to hold the plot
-    //         var pThree = $("<p>").text("Plot: " + plot);
-
-    //         // Appending the plot
-    //         animalDiv.append(pThree);
-
-    //         // Retrieving the URL for the image
-    //         var imgURL = response.Poster;
-
-    //         // Creating an element to hold the image
-    //         var image = $("<img>").attr("src", imgURL);
-
-    //         // Appending the image
-    //         animalDiv.append(image);
-
-    //         // Putting the entire movie above the previous movies
-    //         $("#animal-view").prepend(animalDiv);
-    // });
-
-    // }
     // // Function for displaying movie data
     function renderButtons() {
 
@@ -122,12 +76,23 @@ $(document).ready(function () {
         event.preventDefault();
         // This line grabs the input from the textbox
         var animal = $("#animal-input").val().trim();
+        if (animal === "") {
+            return false;
+        }
+        if(topics.includes(animal.toString())){
+            renderButtons();
+        }
+        else{
+
+        
+        topics.push(animal);
 
         // Adding movie from the textbox to our array
-        topics.push(animal);
+        // topics.push(animal);
 
         // Calling renderButtons which handles the processing of our movie array
         renderButtons();
+        }
     });
 
     // Adding a click event listener to all elements with a class of "movie-btn"
