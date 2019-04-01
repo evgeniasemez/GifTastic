@@ -66,7 +66,7 @@ $(document).ready(function () {
         // (this is necessary otherwise you will have repeat buttons)
         $("#buttons-view").empty();
         // setting a text input to set "desired animal" on refresh
-        $("#animal-input").val("desired animal");
+        $("#animal-input").val("");
 
         // Looping through the array of animals
         for (var i = 0; i < topics.length; i++) {
