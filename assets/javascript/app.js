@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     var topics = ["bunny", "kitten", "puppy", "dolphin", "elephant", "raccoon", "bear", "wolf", "chicken", "turtle", "pig", "hamster", "rat", "frog", "bird"];
 
     function displayAnimalInfo() {
@@ -27,12 +28,31 @@ $(document).ready(function () {
                 var newThing = response.data[i].images.fixed_height.url;
 
                 image.attr("moving", newThing);
+                image.attr("stillORMoving", "still");
 
                 image.on("click", function () {
 
-                    var imagg = $(this).attr("moving");
-                    $(this).attr("src", imagg);
+                    var movingImageUrl = $(this).attr("moving");
+                    // $(this).attr("src", movingImageUrl);
+
+                    var makingItStill = $(this).attr("stillORMoving");
+                    // $(this).attr("src", makingItStill);
+                    // image.attr("stillORMoving", "still");
+                    if (makingItStill === "still") {
+                        $(this).attr("src", movingImageUrl);
+                        $(this).attr("stillORMoving", "moving");
+                    }
+                    else {
+                        $(this).attr("stillORMoving", "still");
+                        // $(this).attr("src", imgURL);
+                        var stillImageUrl = $(this).attr("still");
+                        $(this).attr("src", stillImageUrl);
+
+                    }
+
                 });
+                image.attr("still", imgURL);
+
 
                 image.attr("class", "blockShow");
 
@@ -47,9 +67,10 @@ $(document).ready(function () {
 
     // // Function for displaying movie data
     function renderButtons() {
-
+        // debugger
         // Deleting the movies prior to adding new movies
         // (this is necessary otherwise you will have repeat buttons)
+        // $("animal-input").val("desired animal");
         $("#buttons-view").empty();
 
         // Looping through the array of movies
@@ -66,38 +87,41 @@ $(document).ready(function () {
             a.text(topics[i]);
             // Adding the button to the buttons-view div
             $("#buttons-view").append(a);
-            console.log("it works");
+            // console.log("it works");
 
         }
     }
 
     // This function handles events where a movie button is clicked
     $("#add-animal").on("click", function (event) {
+        console.log($(this))
+
         event.preventDefault();
         // This line grabs the input from the textbox
-        var animal = $("#animal-input").val().trim();
+        animal = $("#animal-input").val().trim();
         if (animal === "") {
             return false;
         }
-        if(topics.includes(animal.toString())){
+        if (topics.includes(animal.toString())) {
             renderButtons();
+            // displayAnimalInfo();
         }
-        else{
+        else {
 
-        
-        topics.push(animal);
 
-        // Adding movie from the textbox to our array
-        // topics.push(animal);
+            topics.push(animal);
 
-        // Calling renderButtons which handles the processing of our movie array
-        renderButtons();
+            // Adding movie from the textbox to our array
+            // topics.push(animal);
+
+            // Calling renderButtons which handles the processing of our movie array
+            renderButtons();
+            $("button[data-name= " + animal + "]").trigger("click");
         }
     });
 
     // Adding a click event listener to all elements with a class of "movie-btn"
     $(document).on("click", ".animal-btn", displayAnimalInfo);
-
     // Calling the renderButtons function to display the intial buttons
     renderButtons();
 
